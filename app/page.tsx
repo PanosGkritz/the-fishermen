@@ -359,12 +359,11 @@ export default function Home() {
           </p>
 
           <h1 className="max-w-3xl font-serif text-5xl leading-[0.95] md:text-7xl">
-            Finding the details others miss.
+            Πέρα από αυτό που βλέπεις.
           </h1>
 
           <p className="mt-7 max-w-xl text-base leading-7 text-[#b6c0c4]">
-            Independent football analysis, scouting and recruitment insights —
-            focused on understanding how the game actually works.
+           Ανεξάρτητη ποδοσφαιρική ανάλυση, scouting και αξιολόγηση παικτών. Αναζητούμε τις λεπτομέρειες που κάνουν τη διαφορά, αναλύουμε όσα δεν φαίνονται με την πρώτη ματιά και ανακαλύπτουμε τις ιστορίες πίσω από την απόδοση.
           </p>
 
           <button
