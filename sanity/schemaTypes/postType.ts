@@ -42,6 +42,19 @@ export const postType = defineType({
     }),
 
     defineField({
+      name: 'categories',
+      title: 'Categories',
+      description: 'Select the categories that best fit this article.',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{ type: 'category' }],
+        }),
+      ],
+    }),
+
+    defineField({
       name: 'mainImage',
       title: 'Cover Image',
       type: 'image',
@@ -104,18 +117,9 @@ export const postType = defineType({
       type: 'string',
       options: {
         list: [
-          {
-            title: 'Team Analysis',
-            value: 'teamAnalysis',
-          },
-          {
-            title: 'Match Analysis',
-            value: 'matchAnalysis',
-          },
-          {
-            title: 'Data & Performance',
-            value: 'dataPerformance',
-          },
+          { title: 'Team Analysis', value: 'teamAnalysis' },
+          { title: 'Match Analysis', value: 'matchAnalysis' },
+          { title: 'Data & Performance', value: 'dataPerformance' },
         ],
         layout: 'radio',
       },
@@ -142,14 +146,8 @@ export const postType = defineType({
       type: 'string',
       options: {
         list: [
-          {
-            title: 'Recruitment Analysis',
-            value: 'recruitmentAnalysis',
-          },
-          {
-            title: 'Market Opportunities',
-            value: 'marketOpportunities',
-          },
+          { title: 'Recruitment Analysis', value: 'recruitmentAnalysis' },
+          { title: 'Market Opportunities', value: 'marketOpportunities' },
         ],
         layout: 'radio',
       },
