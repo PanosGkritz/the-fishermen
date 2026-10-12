@@ -2,7 +2,8 @@
 import { Suspense } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PortableText } from '@portabletext/react'
+import { PortableText, type PortableTextComponents } from '@portabletext/react'
+
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { scoutingReportBySlugQuery } from '@/sanity/lib/queries'
@@ -20,6 +21,15 @@ type RatingSet = {
   mental?: number
 }
 
+type SanityImage = {
+  _type?: string
+  asset?: {
+    _ref?: string
+  }
+  alt?: string
+  caption?: string
+}
+
 type Report = {
   _id: string
   title: string
@@ -35,12 +45,7 @@ type Report = {
   recommendation?: string
   ratings?: RatingSet
   videoUrl?: string
-  mainImage?: {
-    asset?: {
-      _ref?: string
-    }
-    alt?: string
-  }
+  mainImage?: SanityImage
   body?: any[]
   player?: {
     name?: string
@@ -48,11 +53,7 @@ type Report = {
     club?: string
     league?: string
     primaryPosition?: string
-    photo?: {
-      asset?: {
-        _ref?: string
-      }
-    }
+    photo?: SanityImage
   }
 }
 
@@ -65,6 +66,33 @@ function formatDate(date?: string) {
     year: 'numeric',
     timeZone: 'UTC',
   }).format(new Date(date))
+}
+
+const portableTextComponents: PortableTextComponents = {
+  types: {
+    image: ({ value }) => {
+      const image = value as SanityImage
+
+      if (!image?.asset) return null
+
+      return (
+        <figure className="my-10">
+          <img
+            src={urlFor(image).width(1600).fit('max').auto('format').url()}
+            alt={image.alt || ''}
+            loading="lazy"
+            className="h-auto max-h-[800px] w-full border border-[#294052] object-contain"
+          />
+
+          {image.caption && (
+            <figcaption className="mt-3 text-center text-sm leading-6 text-[#9daab0]">
+              {image.caption}
+            </figcaption>
+          )}
+        </figure>
+      )
+    },
+  },
 }
 
 function RatingCard({
@@ -85,9 +113,7 @@ function RatingCard({
       </p>
 
       <div className="mt-3 flex items-baseline gap-2">
-        <span className="font-serif text-4xl text-[#eee8da]">
-          {value}
-        </span>
+        <span className="font-serif text-4xl text-[#eee8da]">{value}</span>
         <span className="text-xs text-[#9daab0]">/ 10</span>
       </div>
 
@@ -101,9 +127,7 @@ function RatingCard({
       >
         <div
           className="h-full bg-[#bdb5a5] transition-[width] duration-500"
-          style={{
-            width: `${score * 10}%`,
-          }}
+          style={{ width: `${score * 10}%` }}
         />
       </div>
     </div>
@@ -121,9 +145,7 @@ function DetailList({
 
   return (
     <section className="border-t border-[#294052] py-8">
-      <h2 className="font-serif text-2xl text-[#eee8da]">
-        {title}
-      </h2>
+      <h2 className="font-serif text-2xl text-[#eee8da]">{title}</h2>
 
       <ul className="mt-5 space-y-3">
         {items.map((item, index) => (
@@ -131,10 +153,7 @@ function DetailList({
             key={`${title}-${index}`}
             className="flex gap-3 text-sm leading-7 text-[#c6cdd0]"
           >
-            <span
-              className="text-[#bdb5a5]"
-              aria-hidden="true"
-            >
+            <span className="text-[#bdb5a5]" aria-hidden="true">
               —
             </span>
             <span>{item}</span>
@@ -229,11 +248,7 @@ async function ReportContent({ slug }: { slug: string }) {
       {report.mainImage?.asset?._ref && (
         <div className="mb-12 overflow-hidden border border-[#294052] bg-[#102536]">
           <img
-            src={urlFor(report.mainImage)
-              .width(1600)
-              .fit('max')
-              .auto('format')
-              .url()}
+            src={urlFor(report.mainImage).width(1600).fit('max').auto('format').url()}
             alt={report.mainImage.alt || report.title}
             className="max-h-[680px] w-full object-cover"
           />
@@ -258,9 +273,7 @@ async function ReportContent({ slug }: { slug: string }) {
               <p className="text-[10px] tracking-[0.15em] text-[#bdb5a5]">
                 SEASON
               </p>
-              <p className="mt-2 text-sm text-[#eee8da]">
-                {report.season}
-              </p>
+              <p className="mt-2 text-sm text-[#eee8da]">{report.season}</p>
             </div>
           )}
         </div>
@@ -278,22 +291,10 @@ async function ReportContent({ slug }: { slug: string }) {
           </h2>
 
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            <RatingCard
-              label="TECHNICAL"
-              value={ratings?.technical}
-            />
-            <RatingCard
-              label="TACTICAL"
-              value={ratings?.tactical}
-            />
-            <RatingCard
-              label="PHYSICAL"
-              value={ratings?.physical}
-            />
-            <RatingCard
-              label="MENTAL"
-              value={ratings?.mental}
-            />
+            <RatingCard label="TECHNICAL" value={ratings?.technical} />
+            <RatingCard label="TACTICAL" value={ratings?.tactical} />
+            <RatingCard label="PHYSICAL" value={ratings?.physical} />
+            <RatingCard label="MENTAL" value={ratings?.mental} />
           </div>
         </section>
       )}
@@ -309,9 +310,7 @@ async function ReportContent({ slug }: { slug: string }) {
 
       {report.roleFit && (
         <section className="border-t border-[#294052] py-8">
-          <h2 className="font-serif text-2xl text-[#eee8da]">
-            Role Fit
-          </h2>
+          <h2 className="font-serif text-2xl text-[#eee8da]">Role Fit</h2>
           <p className="mt-4 whitespace-pre-line text-sm leading-7 text-[#c6cdd0]">
             {report.roleFit}
           </p>
@@ -347,7 +346,10 @@ async function ReportContent({ slug }: { slug: string }) {
 
       {report.body && report.body.length > 0 && (
         <section className="prose prose-invert prose-headings:font-serif prose-headings:font-normal prose-headings:text-[#eee8da] prose-p:leading-8 prose-p:text-[#c6cdd0] prose-strong:text-[#eee8da] prose-a:text-[#bdb5a5] mt-12 max-w-none">
-          <PortableText value={report.body} />
+          <PortableText
+            value={report.body}
+            components={portableTextComponents}
+          />
         </section>
       )}
 
@@ -375,17 +377,12 @@ async function ReportContent({ slug }: { slug: string }) {
   )
 }
 
-async function ScoutingReportPageContent({
-  params,
-}: ReportPageProps) {
+async function ScoutingReportPageContent({ params }: ReportPageProps) {
   const { slug } = await params
-
   return <ReportContent slug={slug} />
 }
 
-export default function ScoutingReportPage({
-  params,
-}: ReportPageProps) {
+export default function ScoutingReportPage({ params }: ReportPageProps) {
   return (
     <main className="min-h-screen bg-[#071827] text-[#eee8da]">
       <section className="mx-auto max-w-5xl px-6 py-10 md:px-10 md:py-16">
