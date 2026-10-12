@@ -34,8 +34,8 @@ export default function PlayerAnalysisPage() {
 
                     <div className="mt-6 flex flex-col gap-6 border-b border-[#294052] pb-10 md:flex-row md:items-center md:justify-between">
                         <p className="max-w-2xl text-base leading-7 text-[#9daab0] md:text-lg">
-                            In-depth analysis of player characteristics, technical
-                            qualities, tactical behaviour and match performances.
+                            Σε βάθος ανάλυση των χαρακτηριστικών των παικτών, των τεχνικών τους ικανοτήτων,
+                             της τακτικής τους συμπεριφοράς και των εμφανίσεών τους στους αγώνες.
                         </p>
 
                         <Link

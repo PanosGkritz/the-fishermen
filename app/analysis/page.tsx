@@ -1,3 +1,4 @@
+
 import { Suspense } from 'react'
 import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
@@ -148,12 +149,12 @@ async function AnalysisPageContent({ searchParams }: PageProps) {
         <div className="mt-6 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <p className="max-w-3xl text-base leading-7 text-[#9daab0] md:text-lg">
             {category === 'teamAnalysis'
-              ? 'A closer look at team identity, tactical structure and the ideas behind collective performance.'
+              ? 'Μια πιο προσεκτική ματιά στην αγωνιστική ταυτότητα των ομάδων, την τακτική τους δομή και τις ιδέες που καθορίζουν τη συλλογική τους απόδοση.'
               : category === 'matchAnalysis'
-                ? 'Breaking down matches, decisive moments and the tactical choices that shape results.'
+                ? 'Ανάλυση αγώνων, καθοριστικών στιγμών και τακτικών επιλογών που διαμορφώνουν το αποτέλεσμα.'
                 : category === 'dataPerformance'
-                  ? 'Exploring football performance through data, statistics and meaningful insights.'
-                  : 'Team identity, match analysis and performance data. A deeper look at the details that shape football.'}
+                  ? 'Διερεύνηση της ποδοσφαιρικής απόδοσης μέσα από δεδομένα, στατιστικά στοιχεία και ουσιαστικά συμπεράσματα.'
+                  : 'Η αγωνιστική ταυτότητα των ομάδων, η ανάλυση αγώνων και τα δεδομένα απόδοσης. Μια βαθύτερη ματιά στις λεπτομέρειες που διαμορφώνουν το ποδόσφαιρο.'}
           </p>
 
           {category && (

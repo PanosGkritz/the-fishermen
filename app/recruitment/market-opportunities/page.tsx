@@ -161,8 +161,8 @@ export default function MarketOpportunitiesPage() {
         </h1>
 
         <p className="mt-7 max-w-2xl text-base leading-7 text-[#aeb9bd]">
-          Finding undervalued talent, overlooked profiles and players who
-          could offer more than the market expects.
+          Ανακάλυψη υποτιμημένων ταλέντων, παικτών που περνούν απαρατήρητοι και
+           περιπτώσεων που μπορούν να προσφέρουν περισσότερα από όσα εκτιμά η αγορά.
         </p>
 
         <div className="mt-10">

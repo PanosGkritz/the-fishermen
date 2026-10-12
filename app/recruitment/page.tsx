@@ -289,8 +289,8 @@ export default function RecruitmentPage() {
         </h1>
 
         <p className="mt-7 max-w-2xl text-base leading-7 text-[#aeb9bd]">
-          Recruitment decisions built around tactical fit, squad needs and
-          a clear football identity.
+          Αποφάσεις στελέχωσης ομάδων με βάση την τακτική συμβατότητα, 
+          τις ανάγκες του ρόστερ και μια ξεκάθαρη αγωνιστική ταυτότητα.
         </p>
 
         <div className="mt-10">

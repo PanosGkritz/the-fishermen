@@ -36,18 +36,21 @@ export default function AboutPage() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg leading-8 text-[#aeb9bd]">
-          Here, we don&apos;t just share news. We analyse footballers worth
-          watching, suggest solutions for teams seeking specific qualities,
-          and highlight opportunities in the transfer market.
+          Εδώ δεν περιοριζόμαστε απλώς στην αναπαραγωγή ειδήσεων.
+          Αναλύουμε ποδοσφαιριστές που αξίζει να παρακολουθήσεις,
+          προτείνουμε λύσεις σε ομάδες που αναζητούν συγκεκριμένα αγωνιστικά
+          χαρακτηριστικά και αναδεικνύουμε ευκαιρίες στην αγορά μεταγραφών.
         </p>
 
         <p className="mt-4 max-w-2xl text-base leading-7 text-[#aeb9bd]">
-          🎯 Our goal is to connect teams&apos; needs with the right players
-          through scouting, analysis and football logic.
+          🎯 Στόχος μας είναι να συνδέουμε τις ανάγκες των ομάδων με τους
+          κατάλληλους ποδοσφαιριστές, μέσα από το scouting, την ανάλυση και
+          την ποδοσφαιρική λογική.
         </p>
 
         <p className="mt-4 max-w-2xl text-base leading-7 text-[#aeb9bd]">
-          If you love scouting and smart transfer recommendations, follow us.
+          Αν αγαπάς το scouting και τις έξυπνες, τεκμηριωμένες μεταγραφικές
+          προτάσεις, ακολούθησέ μας.
         </p>
       </section>
 
@@ -60,21 +63,22 @@ export default function AboutPage() {
               </p>
 
               <h2 className="font-serif text-3xl leading-tight md:text-4xl">
-                Finding the details others miss.
+                Ανακαλύπτοντας όσα οι άλλοι δεν προσέχουν.
               </h2>
             </div>
 
             <div className="text-sm leading-7 text-[#526068]">
               <p>
-                Football is more than results, formations and statistics.
-                Behind every team is a structure. Behind every player is a
-                role. And behind every recruitment decision is a reason.
+                Δεν είναι μόνο τα αποτελέσματα, οι σχηματισμοί και τα
+                στατιστικά που καθορίζουν το ποδόσφαιρο. Πίσω από κάθε ομάδα
+                υπάρχει μια δομή. Πίσω από κάθε ποδοσφαιριστή, ένας ρόλος.
+                Και πίσω από κάθε απόφαση στελέχωσης, ένας συγκεκριμένος λόγος.
               </p>
 
               <p className="mt-4">
-                The Fishermen explores these details through tactical
-                analysis, scouting and recruitment thinking — from the pitch
-                to the market.
+                Το THE FISHERMEN εξερευνά αυτές τις λεπτομέρειες μέσα από την
+                τακτική ανάλυση, το scouting και τη φιλοσοφία της στελέχωσης
+                ομάδων, από τον αγωνιστικό χώρο μέχρι τη μεταγραφική αγορά.
               </p>
             </div>
           </div>
@@ -94,11 +98,13 @@ export default function AboutPage() {
               href="/analysis"
               className="border border-[#294052] bg-[#0c2234] p-6 transition-colors hover:border-[#bdb5a5]"
             >
-              <p className="text-[10px] tracking-[0.2em] text-[#bdb5a5]">01</p>
+              <p className="text-[10px] tracking-[0.2em] text-[#bdb5a5]">
+                01
+              </p>
               <h3 className="mt-6 font-serif text-2xl">Analysis</h3>
               <p className="mt-3 text-sm leading-6 text-[#aeb9bd]">
-                Understanding tactical structures, team behaviour and the
-                moments that change games.
+                Κατανόηση της τακτικής δομής, της συμπεριφοράς των ομάδων
+                και των στιγμών που αλλάζουν την εξέλιξη ενός αγώνα.
               </p>
               <p className="mt-5 text-[10px] tracking-[0.15em] text-[#bdb5a5]">
                 EXPLORE ANALYSIS →
@@ -109,11 +115,14 @@ export default function AboutPage() {
               href="/scouting"
               className="border border-[#294052] bg-[#0c2234] p-6 transition-colors hover:border-[#bdb5a5]"
             >
-              <p className="text-[10px] tracking-[0.2em] text-[#bdb5a5]">02</p>
+              <p className="text-[10px] tracking-[0.2em] text-[#bdb5a5]">
+                02
+              </p>
               <h3 className="mt-6 font-serif text-2xl">Scouting</h3>
               <p className="mt-3 text-sm leading-6 text-[#aeb9bd]">
-                Looking beyond statistics to understand player roles,
-                behaviours, strengths and potential.
+                Κοιτάζουμε πέρα από τα στατιστικά για να κατανοήσουμε τους
+                αγωνιστικούς ρόλους, τη συμπεριφορά, τα δυνατά σημεία και
+                τις προοπτικές των παικτών.
               </p>
               <p className="mt-5 text-[10px] tracking-[0.15em] text-[#bdb5a5]">
                 EXPLORE SCOUTING →
@@ -124,11 +133,14 @@ export default function AboutPage() {
               href="/recruitment"
               className="border border-[#294052] bg-[#0c2234] p-6 transition-colors hover:border-[#bdb5a5]"
             >
-              <p className="text-[10px] tracking-[0.2em] text-[#bdb5a5]">03</p>
+              <p className="text-[10px] tracking-[0.2em] text-[#bdb5a5]">
+                03
+              </p>
               <h3 className="mt-6 font-serif text-2xl">Recruitment</h3>
               <p className="mt-3 text-sm leading-6 text-[#aeb9bd]">
-                Connecting player profiles with team identity, tactical
-                needs and long-term recruitment strategy.
+                Συνδέουμε τα προφίλ των παικτών με την αγωνιστική ταυτότητα
+                των ομάδων, τις τακτικές τους ανάγκες και τον μακροπρόθεσμο
+                σχεδιασμό της στελέχωσής τους.
               </p>
               <p className="mt-5 text-[10px] tracking-[0.15em] text-[#bdb5a5]">
                 EXPLORE RECRUITMENT →
@@ -145,11 +157,11 @@ export default function AboutPage() {
           </p>
 
           <h2 className="font-serif text-3xl leading-tight md:text-5xl">
-            Football is won in the details.
+            Το ποδόσφαιρο κρίνεται στις λεπτομέρειες.
           </h2>
 
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#aeb9bd]">
-            We are here to find them.
+            Εμείς είμαστε εδώ για να τις ανακαλύψουμε.
           </p>
         </div>
       </section>
@@ -166,8 +178,8 @@ export default function AboutPage() {
             </h2>
 
             <p className="mt-3 max-w-lg text-sm leading-6 text-[#aeb9bd]">
-              For enquiries, collaborations or football-related discussions,
-              get in touch with The Fishermen.
+              Για ερωτήσεις, συνεργασίες ή συζητήσεις γύρω από το ποδόσφαιρο,
+              επικοινώνησε με το THE FISHERMEN.
             </p>
 
             <button
@@ -214,7 +226,7 @@ export default function AboutPage() {
             </div>
 
             <p className="mt-4 text-xs text-[#9daab0]">
-              Independent football analysis, scouting &amp; recruitment.
+              Ανεξάρτητη ποδοσφαιρική ανάλυση, scouting και στελέχωση ομάδων.
             </p>
           </div>
         </div>

@@ -48,8 +48,8 @@ export default function ContactPage() {
             </h1>
 
             <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#aeb9bd]">
-              For enquiries, collaborations and football-related discussions,
-              we&apos;d love to hear from you.
+              Για ερωτήσεις, συνεργασίες ή συζητήσεις γύρω από το ποδόσφαιρο, 
+              θα χαρούμε να επικοινωνήσεις μαζί μας.
             </p>
           </div>
 
@@ -72,7 +72,7 @@ export default function ContactPage() {
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-[#aeb9bd]">
-              Fill in the form below and we&apos;ll get back to you.
+              Συμπλήρωσε την παρακάτω φόρμα και θα επικοινωνήσουμε μαζί σου.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
