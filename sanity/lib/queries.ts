@@ -123,7 +123,6 @@ export const postBySlugQuery = defineQuery(`
 
 // PLAYER PROFILES
 // Returns players who have at least one published scouting report.
-
 export const playerProfilesQuery = defineQuery(`
     *[
         _type == "player" &&
@@ -165,7 +164,6 @@ export const playerProfilesQuery = defineQuery(`
 
 // SINGLE PLAYER PROFILE
 // Includes the player information and all published scouting reports.
-
 export const playerProfileBySlugQuery = defineQuery(`
     *[
         _type == "player" &&
@@ -211,7 +209,8 @@ export const playerProfileBySlugQuery = defineQuery(`
                 ...,
                 alt
             },
-            body
+            body,
+            fullScoutingReport
         }
     }
 `)
@@ -243,22 +242,7 @@ export const scoutingReportBySlugQuery = defineQuery(`
             alt
         },
         body,
-        
-        mainImage {
-            ...,
-            alt
-        },
-        body,
         fullScoutingReport,
-        "player": player-> {
-            name,
-            "slug": slug.current,
-            club,
-            league,
-            primaryPosition,
-            photo
-        }
-
         "player": player-> {
             name,
             "slug": slug.current,
