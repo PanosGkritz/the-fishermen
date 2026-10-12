@@ -359,7 +359,7 @@ export default function Home() {
           </p>
 
           <h1 className="max-w-3xl font-serif text-5xl leading-[0.95] md:text-7xl">
-            Πέρα από αυτό που βλέπεις.
+            Δες το παιχνίδι διαφορετικά.
           </h1>
 
           <p className="mt-7 max-w-xl text-base leading-7 text-[#b6c0c4]">
