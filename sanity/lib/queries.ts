@@ -243,6 +243,22 @@ export const scoutingReportBySlugQuery = defineQuery(`
             alt
         },
         body,
+        
+        mainImage {
+            ...,
+            alt
+        },
+        body,
+        fullScoutingReport,
+        "player": player-> {
+            name,
+            "slug": slug.current,
+            club,
+            league,
+            primaryPosition,
+            photo
+        }
+
         "player": player-> {
             name,
             "slug": slug.current,
