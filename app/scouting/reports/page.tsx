@@ -197,12 +197,21 @@ export default function ScoutingReportsPage() {
           Scouting Reports
         </h1>
 
-        <p className="mt-6 max-w-3xl text-base leading-7 text-[#9daab0] md:text-lg">
-          In-depth player evaluations, technical observations and scouting
-          insights.
-        </p>
+       <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+  <p className="max-w-3xl text-base leading-7 text-[#9daab0] md:text-lg">
+    Αναλυτικές αξιολογήσεις παικτών, τεχνικές παρατηρήσεις και συμπεράσματα scouting.
+  </p>
 
-        <div className="mt-10 border-b border-[#294052]" />
+  <Link
+    href="/scouting/players"
+    className="inline-flex shrink-0 items-center gap-3 self-start border border-[#294052] px-5 py-4 text-xs tracking-[0.15em] transition-colors duration-300 hover:border-[#bdb5a5] hover:text-[#bdb5a5] sm:self-auto"
+  >
+    <span aria-hidden="true">←</span>
+    ALL PLAYER PROFILES
+  </Link>
+</div>
+
+<div className="mt-10 border-b border-[#294052]" />
       </section>
 
       <section className="bg-[#071827] px-6 pb-16 md:px-10 md:pb-24">
