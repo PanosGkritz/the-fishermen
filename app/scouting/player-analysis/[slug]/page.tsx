@@ -180,7 +180,7 @@ async function PlayerAnalysisContent({ slug }: { slug: string }) {
       )}
 
       {analysis.body && analysis.body.length > 0 ? (
-        <div className="prose prose-invert prose-headings:font-semibold prose-headings:uppercase prose-headings:tracking-tight prose-p:text-[#c6cdd0] prose-p:leading-8 prose-a:text-[#bdb5a5] prose-strong:text-[#eee8da] max-w-none">
+      <div className="max-w-none text-[17px] leading-8 text-[#c6cdd0] [&_p]:mb-7 [&_p]:text-[17px] [&_p]:leading-8 [&_h2]:mb-5 [&_h2]:mt-12 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:uppercase [&_h3]:mb-4 [&_h3]:mt-9 [&_h3]:text-xl [&_h3]:font-semibold [&_strong]:text-[#eee8da] [&_a]:text-[#bdb5a5] [&_figure]:my-12 [&_img]:block [&_img]:h-auto [&_img]:w-full">
           <PortableText
             value={analysis.body}
             components={portableTextComponents}
