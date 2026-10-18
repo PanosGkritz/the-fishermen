@@ -1,3 +1,4 @@
+
 import { Suspense } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -46,6 +47,35 @@ const typeLabels: Record<string, string> = {
   tactical: 'Tactical Analysis',
   technical: 'Technical Analysis',
   matchBased: 'Match Analysis',
+}
+
+const portableTextComponents = {
+  types: {
+    image: ({ value }: { value: any }) => {
+      if (!value?.asset) return null
+
+      return (
+        <figure className="my-8">
+          <img
+            src={urlFor(value)
+              .width(1200)
+              .fit('max')
+              .auto('format')
+              .url()}
+            alt={value.alt || 'Player analysis image'}
+            loading="lazy"
+            className="h-auto w-full rounded-sm"
+          />
+
+          {value.caption && (
+            <figcaption className="mt-2 text-center text-sm text-[#9daab0]">
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      )
+    },
+  },
 }
 
 async function PlayerAnalysisContent({ slug }: { slug: string }) {
@@ -127,6 +157,7 @@ async function PlayerAnalysisContent({ slug }: { slug: string }) {
               .auto('format')
               .url()}
             alt={analysis.mainImage.alt || analysis.title}
+            loading="eager"
             className="max-h-[680px] w-full object-cover"
           />
         </div>
@@ -150,7 +181,10 @@ async function PlayerAnalysisContent({ slug }: { slug: string }) {
 
       {analysis.body && analysis.body.length > 0 ? (
         <div className="prose prose-invert prose-headings:font-semibold prose-headings:uppercase prose-headings:tracking-tight prose-p:text-[#c6cdd0] prose-p:leading-8 prose-a:text-[#bdb5a5] prose-strong:text-[#eee8da] max-w-none">
-          <PortableText value={analysis.body} />
+          <PortableText
+            value={analysis.body}
+            components={portableTextComponents}
+          />
         </div>
       ) : (
         <p className="border-t border-[#294052] py-8 text-sm text-[#9daab0]">
