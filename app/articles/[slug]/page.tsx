@@ -1,7 +1,9 @@
+
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
+import type { PortableTextComponents } from '@portabletext/react'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { postBySlugQuery } from '@/sanity/lib/queries'
@@ -9,8 +11,26 @@ import { postBySlugQuery } from '@/sanity/lib/queries'
 type ArticleImage = {
   _type?: string
   _key?: string
-  asset?: { _ref?: string }
+  asset?: {
+    _ref?: string
+    _id?: string
+    _type?: string
+  }
   alt?: string
+  caption?: string
+}
+
+type ArticleVideo = {
+  _type?: string
+  _key?: string
+  asset?: {
+    _ref?: string
+    _id?: string
+    _type?: string
+    url?: string
+    mimeType?: string
+  }
+  caption?: string
 }
 
 type Article = {
@@ -60,6 +80,138 @@ function ArticleFallback() {
   )
 }
 
+function InlineVideo({ value }: { value: ArticleVideo }) {
+  const videoUrl = value?.asset?.url
+
+  if (!videoUrl) {
+    return (
+      <p className="my-8 text-sm text-[#9daab0]">
+        Το βίντεο δεν είναι διαθέσιμο. Έλεγξε το αρχείο που ανέβηκε στο Sanity.
+      </p>
+    )
+  }
+
+  return (
+    <figure className="my-10">
+      <video
+        controls
+        playsInline
+        preload="metadata"
+        className="block h-auto max-h-[720px] w-full rounded-xl border border-[#294052] bg-black"
+      >
+        <source
+          src={videoUrl}
+          type={value.asset?.mimeType || 'video/mp4'}
+        />
+        Ο browser σου δεν υποστηρίζει αναπαραγωγή βίντεο.
+      </video>
+
+      {value.caption && (
+        <figcaption className="mt-3 text-center text-xs leading-5 text-[#9daab0]">
+          {value.caption}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+const portableTextComponents: PortableTextComponents = {
+  types: {
+    image: ({ value }) => {
+      const image = value as ArticleImage
+
+      if (!image?.asset?._ref) return null
+
+      return (
+        <figure className="my-10">
+          <img
+            src={urlFor(image).width(1400).quality(90).url()}
+            alt={image.alt || ''}
+            loading="lazy"
+            className="h-auto w-full rounded-xl border border-[#294052] object-cover"
+          />
+          {image.caption && (
+            <figcaption className="mt-3 text-center text-xs leading-5 text-[#9daab0]">
+              {image.caption}
+            </figcaption>
+          )}
+        </figure>
+      )
+    },
+
+    video: ({ value }) => (
+      <InlineVideo value={value as ArticleVideo} />
+    ),
+
+    file: ({ value }) => (
+      <InlineVideo value={value as ArticleVideo} />
+    ),
+  },
+
+  block: {
+    h1: ({ children }) => (
+      <h2 className="mb-5 mt-12 font-serif text-4xl leading-tight text-[#eee8da]">
+        {children}
+      </h2>
+    ),
+    h2: ({ children }) => (
+      <h2 className="mb-5 mt-12 font-serif text-3xl leading-tight text-[#eee8da]">
+        {children}
+      </h2>
+    ),
+    h3: ({ children }) => (
+      <h3 className="mb-4 mt-10 font-serif text-2xl text-[#eee8da]">
+        {children}
+      </h3>
+    ),
+    h4: ({ children }) => (
+      <h4 className="mb-4 mt-8 text-xl font-semibold text-[#eee8da]">
+        {children}
+      </h4>
+    ),
+    normal: ({ children }) => (
+      <p className="mb-6">{children}</p>
+    ),
+    blockquote: ({ children }) => (
+      <blockquote className="my-8 border-l-2 border-[#bdb5a5] pl-6 font-serif text-xl italic text-[#eee8da]">
+        {children}
+      </blockquote>
+    ),
+  },
+
+  list: {
+    bullet: ({ children }) => (
+      <ul className="mb-6 list-disc space-y-2 pl-6">
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => (
+      <ol className="mb-6 list-decimal space-y-2 pl-6">
+        {children}
+      </ol>
+    ),
+  },
+
+  marks: {
+    strong: ({ children }) => (
+      <strong className="font-semibold text-[#eee8da]">
+        {children}
+      </strong>
+    ),
+    em: ({ children }) => <em>{children}</em>,
+    link: ({ children, value }) => (
+      <a
+        href={value?.href}
+        target={value?.blank ? '_blank' : undefined}
+        rel={value?.blank ? 'noopener noreferrer' : undefined}
+        className="underline underline-offset-4 hover:text-white"
+      >
+        {children}
+      </a>
+    ),
+  },
+}
+
 async function ArticleContent({
   params,
 }: {
@@ -83,7 +235,6 @@ async function ArticleContent({
   return (
     <main className="min-h-screen bg-[#071827] text-[#eee8da]">
       <article>
-        {/* ARTICLE HEADER */}
         <section className="mx-auto max-w-4xl px-6 pb-12 pt-12 md:pt-20">
           <Link
             href={`/${section}`}
@@ -116,7 +267,6 @@ async function ArticleContent({
           </div>
         </section>
 
-        {/* COVER IMAGE */}
         {article.mainImage?.asset?._ref && (
           <div className="mx-auto max-w-6xl px-6">
             <img
@@ -127,104 +277,16 @@ async function ArticleContent({
           </div>
         )}
 
-        {/* ARTICLE BODY, INCLUDING INLINE IMAGES */}
         <section className="mx-auto max-w-3xl px-6 py-14 md:py-20">
           {article.body && article.body.length > 0 && (
             <div className="text-base leading-8 text-[#d5dadd] md:text-lg">
               <PortableText
                 value={article.body}
-                components={{
-                  types: {
-                    image: ({ value }: { value: ArticleImage }) => {
-                      if (!value?.asset?._ref) return null
-
-                      return (
-                        <figure className="my-10">
-                          <img
-                            src={urlFor(value).width(1400).quality(90).url()}
-                            alt={value.alt || article.title}
-                            loading="lazy"
-                            className="h-auto w-full rounded-xl border border-[#294052] object-cover"
-                          />
-                          {value.alt && (
-                            <figcaption className="mt-3 text-center text-xs leading-5 text-[#9daab0]">
-                              {value.alt}
-                            </figcaption>
-                          )}
-                        </figure>
-                      )
-                    },
-                  },
-                  block: {
-                    h1: ({ children }) => (
-                      <h2 className="mb-5 mt-12 font-serif text-4xl leading-tight text-[#eee8da]">
-                        {children}
-                      </h2>
-                    ),
-                    h2: ({ children }) => (
-                      <h2 className="mb-5 mt-12 font-serif text-3xl leading-tight text-[#eee8da]">
-                        {children}
-                      </h2>
-                    ),
-                    h3: ({ children }) => (
-                      <h3 className="mb-4 mt-10 font-serif text-2xl text-[#eee8da]">
-                        {children}
-                      </h3>
-                    ),
-                    h4: ({ children }) => (
-                      <h4 className="mb-4 mt-8 text-xl font-semibold text-[#eee8da]">
-                        {children}
-                      </h4>
-                    ),
-                    normal: ({ children }) => (
-                      <p className="mb-6">{children}</p>
-                    ),
-                    blockquote: ({ children }) => (
-                      <blockquote className="my-8 border-l-2 border-[#bdb5a5] pl-6 font-serif text-xl italic text-[#eee8da]">
-                        {children}
-                      </blockquote>
-                    ),
-                  },
-                  list: {
-                    bullet: ({ children }) => (
-                      <ul className="mb-6 list-disc space-y-2 pl-6">
-                        {children}
-                      </ul>
-                    ),
-                    number: ({ children }) => (
-                      <ol className="mb-6 list-decimal space-y-2 pl-6">
-                        {children}
-                      </ol>
-                    ),
-                  },
-                  marks: {
-                    strong: ({ children }) => (
-                      <strong className="font-semibold text-[#eee8da]">
-                        {children}
-                      </strong>
-                    ),
-                    em: ({ children }) => <em>{children}</em>,
-                    link: ({ children, value }) => (
-                      <a
-                        href={value?.href}
-                        target={value?.blank ? '_blank' : undefined}
-                        rel={
-                          value?.blank
-                            ? 'noopener noreferrer'
-                            : undefined
-                        }
-                        className="underline underline-offset-4 hover:text-white"
-                      >
-                        {children}
-                      </a>
-                    ),
-                  },
-                }}
+                components={portableTextComponents}
               />
             </div>
           )}
 
-          {/* ADDITIONAL IMAGE GALLERY */}
           {article.gallery && article.gallery.length > 0 && (
             <div className="mt-12 grid gap-5 sm:grid-cols-2">
               {article.gallery.map((image, index) =>
@@ -241,7 +303,6 @@ async function ArticleContent({
             </div>
           )}
 
-          {/* VIDEO */}
           {article.videoUrl && (
             <div className="mt-12 border-t border-[#294052] pt-8">
               <p className="mb-4 text-xs tracking-[0.18em] text-[#bdb5a5]">
@@ -258,7 +319,6 @@ async function ArticleContent({
             </div>
           )}
 
-          {/* BACK TO SECTION */}
           <div className="mt-16 border-t border-[#294052] pt-8">
             <Link
               href={`/${section}`}

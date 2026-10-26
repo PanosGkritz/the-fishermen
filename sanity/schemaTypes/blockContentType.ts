@@ -1,7 +1,6 @@
 
 import { defineType, defineArrayMember } from 'sanity'
 
-
 export const blockContentType = defineType({
   title: 'Block Content',
   name: 'blockContent',
@@ -42,6 +41,7 @@ export const blockContentType = defineType({
 
     defineArrayMember({
       type: 'image',
+      title: 'Image',
       options: { hotspot: true },
       fields: [
         {
@@ -53,6 +53,22 @@ export const blockContentType = defineType({
           name: 'caption',
           type: 'string',
           title: 'Image Caption',
+        },
+      ],
+    }),
+
+    defineArrayMember({
+      name: 'video',
+      title: 'Video',
+      type: 'file',
+      options: {
+        accept: 'video/*',
+      },
+      fields: [
+        {
+          name: 'caption',
+          type: 'string',
+          title: 'Video Caption',
         },
       ],
     }),
